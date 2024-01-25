@@ -1,12 +1,17 @@
 import 'package:basic_2/arguments/berita_arguments.dart';
+import 'package:basic_2/controller/car_provider.dart';
 import 'package:basic_2/pages/detail_pages.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ListBeritaUI extends StatelessWidget {
   const ListBeritaUI({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final carsProvider = Provider.of<CarProvider>(context);
+    final loadedCars = carsProvider.cars;
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -17,7 +22,7 @@ class ListBeritaUI extends StatelessWidget {
                 height: 50,
               ),
               // Todays News Widget
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
@@ -79,6 +84,9 @@ class ListBeritaUI extends StatelessWidget {
                       itemBuilder: (_, index) {
                         return GestureDetector(
                           onTap: () {
+                            // Sink dengan setter
+                            // carsProvider.selectingCar = loadedCars[index];
+                            carsProvider.selectCar(loadedCars[index]);
                             Navigator.pushNamed(
                               context,
                               DetailBeritaUI.routeName,

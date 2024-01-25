@@ -1,8 +1,10 @@
+import 'package:basic_2/controller/car_provider.dart';
 import 'package:basic_2/pages/detail_pages.dart';
 import 'package:basic_2/pages/list_berita_pages.dart';
 import 'package:basic_2/pages/navigation_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import 'api/services.dart';
 
@@ -15,28 +17,35 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-        primaryColor: Colors.pink,
-        appBarTheme: const AppBarTheme(
-          color: Colors.blue,
-          titleTextStyle: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => CarProvider(),
+        )
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+          primaryColor: Colors.pink,
+          appBarTheme: const AppBarTheme(
+            color: Colors.blue,
+            titleTextStyle: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
           ),
+          cardColor: Colors.lightBlue,
+          textTheme: GoogleFonts.k2dTextTheme(),
         ),
-        cardColor: Colors.lightBlue,
-        textTheme: GoogleFonts.k2dTextTheme(),
+        routes: {
+          DetailBeritaUI.routeName: (context) =>
+              const DetailBeritaUI(), // '/detail-berita'
+        },
+        home: const ListBeritaUI(),
       ),
-      routes: {
-        DetailBeritaUI.routeName: (context) =>
-            const DetailBeritaUI(), // '/detail-berita'
-      },
-      home: const ListBeritaUI(),
     );
   }
 }

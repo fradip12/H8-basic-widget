@@ -1,5 +1,8 @@
 import 'package:basic_2/arguments/berita_arguments.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../controller/car_provider.dart';
 
 class DetailBeritaUI extends StatelessWidget {
   static const routeName = '/detail-berita';
@@ -18,15 +21,34 @@ class DetailBeritaUI extends StatelessWidget {
             child: const Icon(Icons.arrow_back)),
       ),
       body: Center(
-        child: Column(
-          children: [
-            Image.network(
-              args.image,
-              width: MediaQuery.of(context).size.width,
-              height: 300,
-            ),
-            Text(args.description),
-          ],
+        child: Consumer<CarProvider>(
+          builder: (_, cp, __) {
+            return Column(
+              children: [
+                Text(
+                  cp.selectedCar?.id ?? '-',
+                  style: TextStyle(
+                    fontSize: 33,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  cp.selectedCar?.brand ?? '-',
+                  style: TextStyle(
+                    fontSize: 33,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  cp.selectedCar!.price.toString(),
+                  style: TextStyle(
+                    fontSize: 33,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
