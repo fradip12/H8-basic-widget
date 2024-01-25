@@ -1,6 +1,8 @@
+import 'package:basic_2/pages/detail_pages.dart';
 import 'package:basic_2/pages/list_berita_pages.dart';
 import 'package:basic_2/pages/navigation_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'api/services.dart';
 
@@ -28,15 +30,13 @@ class MyApp extends StatelessWidget {
           ),
         ),
         cardColor: Colors.lightBlue,
-        textTheme: const TextTheme(
-          displayLarge: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: Colors.amber,
-          ),
-        ),
+        textTheme: GoogleFonts.k2dTextTheme(),
       ),
-      home: const NavigationAppBar(),
+      routes: {
+        DetailBeritaUI.routeName: (context) =>
+            const DetailBeritaUI(), // '/detail-berita'
+      },
+      home: const ListBeritaUI(),
     );
   }
 }

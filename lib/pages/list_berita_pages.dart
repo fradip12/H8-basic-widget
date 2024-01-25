@@ -1,3 +1,5 @@
+import 'package:basic_2/arguments/berita_arguments.dart';
+import 'package:basic_2/pages/detail_pages.dart';
 import 'package:flutter/material.dart';
 
 class ListBeritaUI extends StatelessWidget {
@@ -11,13 +13,128 @@ class ListBeritaUI extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              const SizedBox(
+                height: 50,
+              ),
               // Todays News Widget
-              const Placeholder(
-                fallbackHeight: 200,
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    flex: 8,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Today News',
+                          style: TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text('Wes, 08 January 2024')
+                      ],
+                    ),
+                  ),
+                  Stack(
+                    alignment: Alignment.topRight,
+                    children: [
+                      CircleAvatar(
+                        radius: 30,
+                      ),
+                      CircleAvatar(
+                        radius: 10,
+                        backgroundColor: Colors.red,
+                      )
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
               ),
               // Latest News Widget
-              const Placeholder(
-                fallbackHeight: 200,
+              Column(
+                children: [
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Latest News',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 220,
+                    child: ListView.separated(
+                      separatorBuilder: (_, __) => const SizedBox(
+                        width: 12,
+                      ),
+                      itemCount: 9,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (_, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              DetailBeritaUI.routeName,
+                              arguments: BeritaArguments(
+                                title: '$index',
+                                description: 'Sayang sekali',
+                                image:
+                                    'https://akcdn.detik.net.id/community/media/visual/2024/01/24/jepang-vs-indonesia-ayase-ueda-piala-asia-piala-asia-2023-indonesia-vs-jepang_169.jpeg?w=700&q=90',
+                              ),
+                            );
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                width: 250,
+                                height: 150,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  image: const DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image: NetworkImage(
+                                      'https://picsum.photos/200/300',
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                'Title Berita $index',
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                'Description Berita $index',
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  )
+                ],
               ),
               const SizedBox(
                 height: 16,

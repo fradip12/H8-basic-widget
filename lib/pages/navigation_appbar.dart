@@ -24,43 +24,81 @@ class _NavigationAppBarState extends State<NavigationAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: Icon(
-          Icons.arrow_back_ios_new_outlined,
-          color: Colors.white,
+    return DefaultTabController(
+      initialIndex: 1,
+      length: 3,
+      child: Scaffold(
+        drawer: Drawer(
+          child: Center(
+            child: Text('Ini Drawer'),
+          ),
         ),
-        title: Text('Title Appbar'),
-        actions: [
-          Icon(
-            Icons.menu,
+        appBar: AppBar(
+          leading: Icon(
+            Icons.arrow_back_ios_new_outlined,
             color: Colors.white,
           ),
-        ],
-      ),
-      body: body.elementAt(index),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: index,
-        onTap: (value) {
-          print(value);
-          setState(() {
-            index = value;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-            label: 'Home',
-            icon: Icon(Icons.home),
+          title: Text('Title Appbar'),
+          actions: [
+            Icon(
+              Icons.menu,
+              color: Colors.white,
+            ),
+          ],
+          bottom: TabBar(
+            onTap: (value) {
+              print('index appbar bottom : $value');
+              setState(() {
+                index = value;
+              });
+            },
+            indicatorColor: Colors.black,
+            tabs: [
+              Tab(
+                child: Icon(
+                  Icons.home,
+                  color: Colors.white,
+                ),
+              ),
+              Tab(
+                child: Icon(
+                  Icons.cloud,
+                  color: Colors.white,
+                ),
+              ),
+              Tab(
+                child: Icon(
+                  Icons.brightness_1,
+                  color: Colors.white,
+                ),
+              )
+            ],
           ),
-          BottomNavigationBarItem(
-            label: 'Profile',
-            icon: Icon(Icons.account_circle),
-          ),
-          BottomNavigationBarItem(
-            label: 'Settings',
-            icon: Icon(Icons.settings),
-          ),
-        ],
+        ),
+        body: TabBarView(children: body),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: index,
+          onTap: (value) {
+            print(value);
+            setState(() {
+              index = value;
+            });
+          },
+          items: [
+            BottomNavigationBarItem(
+              label: 'Home',
+              icon: Icon(Icons.home),
+            ),
+            BottomNavigationBarItem(
+              label: 'Profile',
+              icon: Icon(Icons.account_circle),
+            ),
+            BottomNavigationBarItem(
+              label: 'Settings',
+              icon: Icon(Icons.settings),
+            ),
+          ],
+        ),
       ),
     );
   }
