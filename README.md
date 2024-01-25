@@ -1,6 +1,6 @@
 # basic_2
 
-A new Flutter project.
+H8 Basic Widget Practice
 
 ## Getting Started
 
