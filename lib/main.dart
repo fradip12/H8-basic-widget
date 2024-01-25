@@ -1,3 +1,5 @@
+import 'package:basic_2/pages/list_berita_pages.dart';
+import 'package:basic_2/pages/navigation_appbar.dart';
 import 'package:flutter/material.dart';
 
 import 'api/services.dart';
@@ -18,7 +20,12 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         primaryColor: Colors.pink,
         appBarTheme: const AppBarTheme(
-          color: Colors.pink,
+          color: Colors.blue,
+          titleTextStyle: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
         ),
         cardColor: Colors.lightBlue,
         textTheme: const TextTheme(
@@ -29,7 +36,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const JsonExample(),
+      home: const NavigationAppBar(),
     );
   }
 }
