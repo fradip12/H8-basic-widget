@@ -1,11 +1,38 @@
+import 'package:basic_2/api/services.dart';
 import 'package:basic_2/arguments/berita_arguments.dart';
 import 'package:basic_2/controller/car_provider.dart';
 import 'package:basic_2/pages/detail_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ListBeritaUI extends StatelessWidget {
+enum ApiStatus {
+  Left,
+  Right;
+}
+
+enum ApiFailure {
+  Error,
+  Unauthorized,
+  Forbidded;
+}
+
+class ListBeritaUI extends StatefulWidget {
   const ListBeritaUI({super.key});
+
+  @override
+  State<ListBeritaUI> createState() => _ListBeritaUIState();
+}
+
+class _ListBeritaUIState extends State<ListBeritaUI> {
+  final api = Api();
+
+  @override
+  void initState() {
+    super.initState();
+    api.readMerchant().catchError((err) {
+      print(err);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
