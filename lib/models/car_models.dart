@@ -1,11 +1,11 @@
-class Car {
+class CarModels {
   String? id;
   String? brand;
   double? price;
   String? type;
   String? imageUrl;
   bool? isFavorite;
-  Car({
+  CarModels({
     this.id,
     this.brand,
     this.price,
@@ -13,4 +13,13 @@ class Car {
     this.imageUrl,
     this.isFavorite,
   });
+
+  CarModels.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    brand = json['brand'];
+    price = json['price'];
+    type = json['type'];
+    imageUrl = json['imageUrl'];
+    isFavorite = json['isFavorite'];
+  }
 }

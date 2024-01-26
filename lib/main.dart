@@ -1,12 +1,11 @@
-import 'package:basic_2/controller/car_provider.dart';
+import 'package:basic_2/api/services.dart';
+import 'package:basic_2/controller/car_controller.dart';
 import 'package:basic_2/pages/detail_pages.dart';
 import 'package:basic_2/pages/list_berita_pages.dart';
-import 'package:basic_2/pages/navigation_appbar.dart';
+import 'package:basic_2/pages/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-
-import 'api/services.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +19,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => CarProvider(),
+          create: (context) => CarProvider(),
         )
       ],
       child: MaterialApp(
@@ -44,7 +43,7 @@ class MyApp extends StatelessWidget {
           DetailBeritaUI.routeName: (context) =>
               const DetailBeritaUI(), // '/detail-berita'
         },
-        home: const ListBeritaUI(),
+        home: const SplashScreen(),
       ),
     );
   }
@@ -276,28 +275,29 @@ class _JsonExampleState extends State<JsonExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: FutureBuilder(
-          future: Api().readMerchant(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return ListView.builder(
-                itemCount: snapshot.data?.length,
-                itemBuilder: (context, index) {
-                  return Text(
-                    snapshot.data?[index].name ?? '-',
-                    style: const TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  );
-                },
-              );
-            }
-            return CircularProgressIndicator();
-          },
-        ),
-      ),
+      body: Container(),
+      // Center(
+      //   child: FutureBuilder(
+      //     future: Api().readMerchant(),
+      //     builder: (context, snapshot) {
+      //       if (snapshot.connectionState == ConnectionState.done) {
+      //         return ListView.builder(
+      //           itemCount: snapshot.data?.length,
+      //           itemBuilder: (context, index) {
+      //             return Text(
+      //               snapshot.data?[index].name ?? '-',
+      //               style: const TextStyle(
+      //                 fontSize: 28,
+      //                 fontWeight: FontWeight.bold,
+      //               ),
+      //             );
+      //           },
+      //         );
+      //       }
+      //       return CircularProgressIndicator();
+      //     },
+      //   ),
+      // ),
     );
   }
 }

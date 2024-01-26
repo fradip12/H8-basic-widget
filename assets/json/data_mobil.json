@@ -1,0 +1,26 @@
+[
+    {
+        "id": "c1",
+        "brand": "BMW",
+        "price": 1200000.000,
+        "type": "M1",
+        "imageUrl": "https://www.stratstone.com/-/media/stratstone/spotlight/bmw-1m-the-greatest-bmw-m-car-ever-made/bmw-1m-carousel-large-1920x772px.ashx",
+        "isFavorite": false
+    },
+    {
+        "id": "c2",
+        "brand": "Mercy",
+        "price": 1200000.000,
+        "type": "M1",
+        "imageUrl": "https://www.stratstone.com/-/media/stratstone/spotlight/bmw-1m-the-greatest-bmw-m-car-ever-made/bmw-1m-carousel-large-1920x772px.ashx",
+        "isFavorite": false
+    },
+    {
+        "id": "c3",
+        "brand": "Toyota",
+        "price": 1200000.000,
+        "type": "M1",
+        "imageUrl": "https://www.stratstone.com/-/media/stratstone/spotlight/bmw-1m-the-greatest-bmw-m-car-ever-made/bmw-1m-carousel-large-1920x772px.ashx",
+        "isFavorite": false
+    }
+]

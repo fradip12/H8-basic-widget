@@ -2,7 +2,7 @@ import 'package:basic_2/arguments/berita_arguments.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../controller/car_provider.dart';
+import '../controller/car_controller.dart';
 
 class DetailBeritaUI extends StatelessWidget {
   static const routeName = '/detail-berita';

@@ -1,20 +1,10 @@
 import 'package:basic_2/api/services.dart';
 import 'package:basic_2/arguments/berita_arguments.dart';
-import 'package:basic_2/controller/car_provider.dart';
+import 'package:basic_2/controller/car_controller.dart';
+import 'package:basic_2/models/car_models.dart';
 import 'package:basic_2/pages/detail_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-enum ApiStatus {
-  Left,
-  Right;
-}
-
-enum ApiFailure {
-  Error,
-  Unauthorized,
-  Forbidded;
-}
 
 class ListBeritaUI extends StatefulWidget {
   const ListBeritaUI({super.key});
@@ -24,21 +14,9 @@ class ListBeritaUI extends StatefulWidget {
 }
 
 class _ListBeritaUIState extends State<ListBeritaUI> {
-  final api = Api();
-
-  @override
-  void initState() {
-    super.initState();
-    api.readMerchant().catchError((err) {
-      print(err);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final carsProvider = Provider.of<CarProvider>(context);
-    final loadedCars = carsProvider.cars;
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -93,6 +71,7 @@ class _ListBeritaUIState extends State<ListBeritaUI> {
                     children: [
                       Text(
                         'Latest News',
+                        textWidthBasis: TextWidthBasis.parent,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -102,72 +81,79 @@ class _ListBeritaUIState extends State<ListBeritaUI> {
                   ),
                   SizedBox(
                     height: 220,
-                    child: ListView.separated(
-                      separatorBuilder: (_, __) => const SizedBox(
-                        width: 12,
-                      ),
-                      itemCount: 9,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (_, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            // Sink dengan setter
-                            // carsProvider.selectingCar = loadedCars[index];
-                            carsProvider.selectCar(loadedCars[index]);
-                            Navigator.pushNamed(
-                              context,
-                              DetailBeritaUI.routeName,
-                              arguments: BeritaArguments(
-                                title: '$index',
-                                description: 'Sayang sekali',
-                                image:
-                                    'https://akcdn.detik.net.id/community/media/visual/2024/01/24/jepang-vs-indonesia-ayase-ueda-piala-asia-piala-asia-2023-indonesia-vs-jepang_169.jpeg?w=700&q=90',
-                              ),
-                            );
-                          },
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Container(
-                                width: 250,
-                                height: 150,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  image: const DecorationImage(
-                                    fit: BoxFit.fill,
-                                    image: NetworkImage(
-                                      'https://picsum.photos/200/300',
+                    child: FutureBuilder(
+                        future: ApiRepository().readCars(),
+                        builder: (context, snapshot) {
+                          return ListView.separated(
+                            separatorBuilder: (_, __) => const SizedBox(
+                              width: 12,
+                            ),
+                            itemCount: snapshot.data?.length ?? 0,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (_, index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  // Sink dengan setter
+                                  // carsProvider.selectingCar = loadedCars[index];
+                                  if (snapshot.hasData) {
+                                    carsProvider
+                                        .selectCar(snapshot.data![index]);
+                                  }
+                                  Navigator.pushNamed(
+                                    context,
+                                    DetailBeritaUI.routeName,
+                                    arguments: BeritaArguments(
+                                      title: '$index',
+                                      description: 'Sayang sekali',
+                                      image:
+                                          'https://akcdn.detik.net.id/community/media/visual/2024/01/24/jepang-vs-indonesia-ayase-ueda-piala-asia-piala-asia-2023-indonesia-vs-jepang_169.jpeg?w=700&q=90',
                                     ),
-                                  ),
+                                  );
+                                },
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Container(
+                                      width: 250,
+                                      height: 150,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        image: const DecorationImage(
+                                          fit: BoxFit.fill,
+                                          image: NetworkImage(
+                                            'https://picsum.photos/200/300',
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      snapshot.data?[index].brand ?? '-',
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black87,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      snapshot.data?[index].type ?? '-',
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                'Title Berita $index',
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black87,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                'Description Berita $index',
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
+                              );
+                            },
+                          );
+                        }),
                   )
                 ],
               ),
